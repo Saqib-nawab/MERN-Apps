@@ -17,10 +17,11 @@ router.post(
     body("name").isLength({ min: 3 }).withMessage("Enter complete name"), // Validates name length
   ],
   async (req, res) => {
+    let success = false;
     const errors = validationResult(req); // Collects validation errors
     if (!errors.isEmpty()) {
       // If there are validation errors, returns a 400 status with error details in JSON
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ success, errors: errors.array() });
     }
 
     // Checking if user with the same email already exists
@@ -42,10 +43,11 @@ router.post(
         },
       };
       const authtoken = jwt.sign(data, JWT_SECRET); // Creating JWT token
-      res.json({ authtoken }); // Sending the token as a response
+      success = true;
+      res.json({ success, authtoken }); // Sending the token as a response
     } catch (error) {
       console.error(error.withMessage); // Logs the error for debugging purposes
-      res.status(500).json({ error: "something went wrong" }); // Sends a generic error response
+      res.status(500).json({ success, error: "something went wrong" }); // Sends a generic error response
     }
   }
 );
@@ -58,7 +60,9 @@ router.post(
     body("password").exists().withMessage("Password not valid"), // checks whether the password is empty or not
     body("email").isEmail().withMessage("wrong credentials"), // checks if the email exists
   ],
+
   async (req, res) => {
+    let success = false;
     const errors = validationResult(req); // Collects validation errors
     if (!errors.isEmpty()) {
       // If there are validation errors, returns a 400 status with error details in JSON
@@ -69,11 +73,13 @@ router.post(
       let user = await User.findOne({ email: req.body.email }); // checks if the user with this email exists
       if (!user) {
         // if not then it returns an error
+        success = false; //when the user enters an invalid credentials he will not be allowed to access
         return res.status(400).json({ errors: "wrong credentials" });
       }
       const passwordcompare = await bcrypt.compare(password, user.password); //comapring if the password is matched to the password entered by user
       if (!passwordcompare) {
-        return res.status(400).json({ errors: "wrong credentials" }); //incase if password is wrong send an error message
+        success = false; //when the user enters an invalid credentials he will not be allowed to access
+        return res.status(400).json({ success, errors: "wrong credentials" }); //incase if password is wrong send an error message
       }
       //otherwise send user data
       const data = {
@@ -82,7 +88,8 @@ router.post(
         },
       };
       const authtoken = jwt.sign(data, JWT_SECRET); // Creating JWT token if the same user wants to login again he will not have to login again.
-      res.json({ authtoken }); // Sending the token as a response
+      success = true; //when the user enters an valid credentials he will  be allowed to access
+      res.json({ success, authtoken }); // Sending the token as a response
     } catch (error) {
       console.error(error.withMessage); // Logs the error for debugging purposes
       res

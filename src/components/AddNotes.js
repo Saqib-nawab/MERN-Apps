@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import noteContext from "../context/notes/notecontext";
 
 // Functional component for adding notes
-const AddNotes = () => {
+const AddNotes = (props) => {
   // Accessing the note context using useContext hook
   const context = useContext(noteContext);
   // Destructuring the addNote function from the context API
@@ -13,7 +13,7 @@ const AddNotes = () => {
   const [note, setnote] = useState({
     title: "",
     description: "",
-    tag: "Default",
+    tag: "",
   });
 
   // Event handler for form submission
@@ -21,6 +21,13 @@ const AddNotes = () => {
     e.preventDefault(); // Prevent the form from reloading the page
     // Call the addNote function with the values from the state
     addNote(note.title, note.description, note.tag);
+    props.showAlert("Added Successfully", "success");
+
+    setnote({
+      title: "",
+      description: "",
+      tag: "Default",
+    });
   };
 
   // Event handler for input changes
@@ -46,11 +53,12 @@ const AddNotes = () => {
             aria-describedby="emailHelp"
             placeholder="Enter title"
             onChange={onChange}
+            value={note.title}
           />
         </div>
         {/* Input field for the description */}
         <div className="form-group my-3">
-          <label htmlFor="exampleInputPassword1">Description</label>
+          <label htmlFor="description">Description</label>
           <input
             type="text"
             className="form-control"
@@ -58,12 +66,13 @@ const AddNotes = () => {
             name="description"
             placeholder="Enter description"
             onChange={onChange}
+            value={note.description}
           />
         </div>
 
         {/* Input field for the tag */}
         <div className="form-group my-3">
-          <label htmlFor="exampleInputPassword1">Tag</label>
+          <label htmlFor="tag">Tag</label>
           <input
             type="text"
             className="form-control"
@@ -71,6 +80,7 @@ const AddNotes = () => {
             name="tag"
             placeholder="Enter tag"
             onChange={onChange}
+            value={note.tag}
           />
         </div>
 
