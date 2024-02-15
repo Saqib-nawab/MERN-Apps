@@ -1,8 +1,10 @@
 // Importing the Mongoose library
 const mongoose = require('mongoose');
+require('dotenv').config();
+
 
 // Defining the MongoDB Atlas URI where the database is hosted
-const mongoURI = "mongodb+srv://Saqib:Skadoodle@Saqib1.zmmqocr.mongodb.net/";
+const mongoURI = process.env.MONGODB_URI;
 
 // Function to connect to MongoDB
 const connectToMongo = async () => {
