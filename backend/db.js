@@ -1,16 +1,25 @@
 // Importing the Mongoose library
 const mongoose = require('mongoose');
 
-// Defining the MongoDB URI where the database is hosted
-const mongoURI = "mongodb://localhost:27017/saqib";
+// Defining the MongoDB Atlas URI where the database is hosted
+const mongoURI = "mongodb+srv://Saqib:Skadoodle@Saqib1.zmmqocr.mongodb.net/";
 
 // Function to connect to MongoDB
-const connectToMongo = () => {
-    // Using Mongoose to connect to the MongoDB instance using the defined URI
-    mongoose.connect(mongoURI);
-    
-    // Logging a message to the console indicating successful connection
-    console.log("Connected to MongoDB");
+const connectToMongo = async () => {
+    try {
+        // Using Mongoose to connect to the MongoDB Atlas instance using the defined URI
+        await mongoose.connect(mongoURI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
+
+        // Logging a message to the console indicating successful connection
+        console.log("Connected to MongoDB Atlas");
+    } catch (error) {
+        // Log error if connection fails
+        console.error("Error connecting to MongoDB Atlas:", error.message);
+        process.exit(1); // Exit process with failure
+    }
 }
 
 // Exporting the connectToMongo function to be used in other files

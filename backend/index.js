@@ -10,9 +10,9 @@ app.use(cors());
 // Parse incoming JSON requests
 app.use(express.json());
 
-const port = 5000;
+const port = process.env.PORT || 5000;
 
-// Establish connection to MongoDB
+// Establish connection to MongoDB Atlas
 connectToMongo();
 
 // Sample route for the root URL
