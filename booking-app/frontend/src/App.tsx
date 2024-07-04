@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  Navigate,
+  // Navigate,
 } from "react-router-dom";
 
 
@@ -17,6 +17,15 @@ function App() {
           path="/"
           element={
             <Layout>
+              <p>Home page</p>
+            </Layout>
+          }
+        />
+        <Route
+          path="/search"
+          element={
+            <Layout>
+              <p>Search page</p>
             </Layout>
           }
         />
@@ -26,4 +35,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
