@@ -7,6 +7,9 @@ import {
 } from "react-router-dom";
 
 
+//pages
+import Register from "./pages/Register";
+
 function App() {
 
   return (
@@ -26,6 +29,15 @@ function App() {
           element={
             <Layout>
               <p>Search page</p>
+            </Layout>
+          }
+        />
+
+         <Route
+          path="/register"
+          element={
+            <Layout>
+              <Register/>
             </Layout>
           }
         />

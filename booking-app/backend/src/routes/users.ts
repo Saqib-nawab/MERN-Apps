@@ -31,6 +31,7 @@ router.post(
       if (user) {
         return res.status(400).json({ message: "User already exists" });
       }
+
       //otherwise create new user
       user = new User(req.body);
       await user.save();

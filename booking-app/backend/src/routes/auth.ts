@@ -16,7 +16,7 @@ router.post(
     }),
   ],
   async (req: Request, res: Response) => {
-    //if express validator has caught any errors
+    //if express validator has caught any errors in the login form
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ message: errors.array() });
@@ -29,6 +29,8 @@ router.post(
       if (!user) {
         return res.status(400).json({ message: "Invalid Credentials" });
       }
+
+      //comparing the passord of the user and the hashed password stored in the database which is why bcrypt is used becuase the password stored cannot be decrypted but the user password can be encypted and then comppared to the password stored in the database
 
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
