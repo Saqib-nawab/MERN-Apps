@@ -1,10 +1,8 @@
-import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "react-query";
+import { useForm } from "react-hook-form"; //Importing the useForm hook from the react-hook-form library
+import { useMutation } from "react-query";
 import * as apiClient from "../api-client";
-import { useAppContext } from "../contexts/AppContext";
-import { useNavigate } from "react-router-dom";
 
-export type RegisterFormData = {
+export type RegisterFormData = { //means the form is going to data of this type
   firstName: string;
   lastName: string;
   email: string;
@@ -13,9 +11,6 @@ export type RegisterFormData = {
 };
 
 const Register = () => {
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
-  const { showToast } = useAppContext();
 
   const {
     register,
@@ -24,19 +19,19 @@ const Register = () => {
     formState: { errors },
   } = useForm<RegisterFormData>();
 
-  const mutation = useMutation(apiClient.register, {
+
+  //mutation is from react-query which mutates
+    const mutation = useMutation(apiClient.register, {
     onSuccess: async () => {
-      showToast({ message: "Registration Success!", type: "SUCCESS" });
-      await queryClient.invalidateQueries("validateToken");
-      navigate("/");
+      console.log({ message: "Registration Success!", type: "SUCCESS" });
     },
     onError: (error: Error) => {
-      showToast({ message: error.message, type: "ERROR" });
+      console.log({ message: error.message, type: "ERROR" });
     },
   });
 
-  const onSubmit = handleSubmit((data) => {
-    mutation.mutate(data);
+  const onSubmit = handleSubmit((data) => { //taking the form data and submitting the form
+        mutation.mutate(data);
   });
 
   return (
