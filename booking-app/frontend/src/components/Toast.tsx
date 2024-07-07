@@ -13,7 +13,7 @@ const Toast = ({ message, type, onClose }: ToastProps) => {
     }, 5000);
 
     return () => {
-      clearTimeout(timer);
+      clearTimeout(timer); //reset timer to 0
     };
   }, [onClose]);
 
