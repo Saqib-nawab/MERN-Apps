@@ -9,6 +9,7 @@ import {
 
 //pages
 import Register from "./pages/Register";
+import SignIn from "./pages/Signin";
 
 function App() {
 
@@ -38,6 +39,15 @@ function App() {
           element={
             <Layout>
               <Register/>
+            </Layout>
+          }
+        />
+
+         <Route
+          path="/sign-in"
+          element={
+            <Layout>
+              <SignIn />
             </Layout>
           }
         />
