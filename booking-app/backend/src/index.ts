@@ -3,7 +3,7 @@ import cors from "cors";
 import "dotenv/config";
 import mongoose from "mongoose";
 
-//routes
+// routes
 import userRoutes from "./routes/users";
 import authRoutes from "./routes/auth";
 
@@ -12,7 +12,14 @@ mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string);
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+
+// CORS configuration
+const corsOptions = {
+  origin: "http://localhost:5173", // Specify your frontend origin here form where request could be accepted (authorisation etc.)
+  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+};
+
+app.use(cors(corsOptions));
 
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);

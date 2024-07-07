@@ -1,8 +1,10 @@
-import { useForm } from "react-hook-form"; //Importing the useForm hook from the react-hook-form library
+import { useForm } from "react-hook-form"; //useForm hook catches the data from the form
 import { useMutation } from "react-query";
 import * as apiClient from "../api-client";
+import { useAppContext } from "../contexts/AppContexts";
+import { useNavigate } from "react-router-dom";
 
-export type RegisterFormData = { //means the form is going to data of this type
+export type RegisterFormData = { //means the form is going to take data of this type
   firstName: string;
   lastName: string;
   email: string;
@@ -11,6 +13,9 @@ export type RegisterFormData = { //means the form is going to data of this type
 };
 
 const Register = () => {
+
+  const navigate = useNavigate();
+  const { showToast } = useAppContext();
 
   const {
     register,
@@ -22,16 +27,18 @@ const Register = () => {
 
   //mutation is from react-query which mutates
     const mutation = useMutation(apiClient.register, {
+      //useMutation hook has to callback functions
     onSuccess: async () => {
-      console.log({ message: "Registration Success!", type: "SUCCESS" });
+      showToast({ message: "Registration Success!", type: "SUCCESS" });
+      navigate("/");
     },
     onError: (error: Error) => {
-      console.log({ message: error.message, type: "ERROR" });
+      showToast({ message: error.message, type: "ERROR" });
     },
   });
 
   const onSubmit = handleSubmit((data) => { //taking the form data and submitting the form
-        mutation.mutate(data);
+        mutation.mutate(data); //mutation is a data modification operation
   });
 
   return (
