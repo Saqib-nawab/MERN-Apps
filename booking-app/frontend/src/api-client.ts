@@ -20,14 +20,15 @@ export const register = async (formData: RegisterFormData) => {
   }
 };
 
+//if this token is validated then the user is logged in
 export const validateToken = async () => {
   const response = await fetch(`${API_BASE_URL}/api/auth/validate-token`, {
-    credentials: "include",
+    credentials: "include", //saves the token in the browser with userId
   });
 
   if (!response.ok) {
     throw new Error("Token invalid");
   }
 
-  return response.json();
+  return response.json(); //token is confirmed to be vallid
 };

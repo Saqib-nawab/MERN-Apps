@@ -34,7 +34,7 @@ export const AppContextProvider = ({ // Defining the context provider component
         showToast: (toastMessage) => { // Function to show a toast message
           setToast(toastMessage); // Setting the toast state
         },
-        isLoggedIn: !isError
+        isLoggedIn: !isError //if the validtoken in apiclient returns true
       }}
     >
       {toast && ( // Conditionally rendering the Toast component if a toast message exists
@@ -44,8 +44,8 @@ export const AppContextProvider = ({ // Defining the context provider component
           onClose={() => setToast(undefined)} // Clearing the toast message on close
         />
       )}
-      {children} // Rendering children components
-    </AppContext.Provider>
+      {children}
+    </AppContext.Provider> 
   );
 };
 
