@@ -37,7 +37,7 @@ router.post(
       await user.save();
 
       const token = jwt.sign(
-        { userId: user.id },
+        { userId: user.id }, //this user id is stored in http later used for authentication in auth.ts middleware
         process.env.JWT_SECRET_KEY as string,
         {
           expiresIn: "1d",

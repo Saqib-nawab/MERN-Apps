@@ -4,6 +4,8 @@ import User from "../models/user";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
+import verifyToken from "../middleware/auth";
+
 const router = express.Router();
 
 router.post(
@@ -58,5 +60,9 @@ router.post(
     }
   }
 );
+
+router.get("/validate-token", verifyToken, (req: Request, res: Response) => {
+  res.status(200).send({ userId: req.userId });
+}); //the logic in this end point is very concised for we are using middleware
 
 export default router;

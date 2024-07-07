@@ -7,15 +7,18 @@ import mongoose from "mongoose";
 import userRoutes from "./routes/users";
 import authRoutes from "./routes/auth";
 
+import cookieParser from "cookie-parser";
+
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string);
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser()); // to parse cookies from request
 app.use(express.urlencoded({ extended: true }));
 
 // CORS configuration
 const corsOptions = {
-  origin: "http://localhost:5173", // Specify your frontend origin here form where request could be accepted (authorisation etc.)
+  origin: process.env.FRONTEND_URL, // Specify your frontend origin here form where request could be accepted (authorisation etc.)
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 };
 
