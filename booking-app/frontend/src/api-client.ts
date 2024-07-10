@@ -1,5 +1,5 @@
 import { RegisterFormData } from "./pages/Register";
-import { SignInFormData } from "./pages/Signin";
+import { SignInFormData } from "./pages/SignIn";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
 //takes the form data from the register page and sends  POST request
@@ -48,4 +48,16 @@ export const validateToken = async () => {
   }
 
   return response.json(); //token is confirmed to be vallid
+};
+
+//signout will be called when this path is hit
+export const signOut = async () => {
+  const response = await fetch(`${API_BASE_URL}/api/auth/logout`, {
+    credentials: "include",
+    method: "POST",
+  });
+
+  if (!response.ok) {
+    throw new Error("Error during sign out");
+  }
 };

@@ -22,6 +22,8 @@ const SignIn = () => {
     handleSubmit,
   } = useForm<SignInFormData>();
 
+
+  //mutation will either be a success or an Error
   const mutation = useMutation(apiClient.signIn, {
     onSuccess: async () => {
       showToast({ message: "Sign in Successful!", type: "SUCCESS" });

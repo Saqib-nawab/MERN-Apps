@@ -9,7 +9,7 @@ import {
 
 //pages
 import Register from "./pages/Register";
-import SignIn from "./pages/Signin";
+import SignIn from "./pages/SignIn";
 
 function App() {
 
